@@ -1,0 +1,17 @@
+FROM node:20
+
+WORKDIR /usr/src/app
+
+COPY ./git.clone.sh ./
+
+RUN chmod +x ./git.clone.sh && ./git.clone.sh
+
+WORKDIR /usr/src/app/nest-js-tutorial
+
+RUN npm install
+
+RUN npm run build
+
+CMD [ "node", "dist/main.js" ]
+
+HEALTHCHECK CMD curl --fail http://localhost:3000
